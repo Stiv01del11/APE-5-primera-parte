@@ -1,24 +1,24 @@
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class EliminarArchivo {
-
+public class Ejercicio3 {
     public static void main(String[] args) {
 
-        // Crear un objeto File
-        File archivo = new File("estudiantes.txt");
+        // 1. Abrimos en modo append = true (agregar al final, NO borrar)
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("materias.txt", true))) {
 
-        // Comprobar si se puede eliminar
-        if (archivo.delete()) {
+            // 2. Añadimos 2 materias nuevas al final
+            escritor.newLine();
+            escritor.write("Redes");
+            escritor.newLine();
+            escritor.write("Sistemas Operativos");
 
-            System.out.println("El archivo "
-                    + archivo.getName()
-                    + " se eliminó correctamente.");
+            System.out.println("Se agregaron 2 materias al final sin borrar las anteriores.");
 
-        } else {
-
-            System.out.println("No se pudo eliminar el archivo.");
-            System.out.println("Puede que no exista o esté en uso.");
-
+        } catch (IOException e) {
+            System.out.println("Error al escribir: " + e.getMessage());
         }
+        // 3. El flujo se cierra solo con try-with-resources
     }
 }
