@@ -1,37 +1,34 @@
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
-public class EscribirArchivo {
-
+public class Ejercicio2 {
     public static void main(String[] args) {
 
-        Scanner teclado = new Scanner(System.in);
+        // 1. Flujo de salida: BufferedWriter + FileWriter
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("materias.txt"))) {
 
-        try {
+            // 2. Escribimos 5 asignaturas
+            String[] materias = {
+                "Algoritmos",
+                "Programación",
+                "Matemáticas",
+                "Base de Datos",
+                "Inglés"
+            };
 
-            // Solicitar un mensaje por teclado
-            System.out.print("Escribe un mensaje: ");
-            String mensaje = teclado.nextLine();
+            for (String materia : materias) {
+                escritor.write(materia);
+                // 3. Una asignatura por línea
+                escritor.newLine();
+            }
 
-            // Abrir el archivo en modo append
-            FileWriter escritor = new FileWriter("estudiantes.txt", true);
+            System.out.println("Archivo materias.txt creado con 5 asignaturas.");
 
-            // Escribir el mensaje
-            escritor.write(mensaje + "\n");
-
-            // Cerrar el archivo
-            escritor.close();
-
-            System.out.println("La información se guardó correctamente.");
-
+        // 4. Control de errores de escritura
         } catch (IOException e) {
-
-            System.out.println("Ocurrió un error al escribir en el archivo.");
-            e.printStackTrace();
-
+            System.out.println("Error al escribir: " + e.getMessage());
         }
-
-        teclado.close();
+        // El try-with-resources cierra el flujo solo (equivale a close())
     }
 }
